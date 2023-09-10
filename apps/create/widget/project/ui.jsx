@@ -11,7 +11,7 @@ const tabs = {
 };
 
 State.init({
-  tab: "metadata",
+  tab: "template",
 });
 
 const Wrapper = styled.div`
@@ -87,8 +87,6 @@ const Content = styled.div`
   }
 `;
 
-/*__@import:QoL/widget__*/
-
 return (
   <Wrapper>
     <Sidebar>
@@ -103,6 +101,6 @@ return (
           </a>
         ))}
     </Sidebar>
-    <Content>{widget(tabs[state.tab].widget, props)}</Content>
+    <Content><Widget src={tabs[state.tab].widget} props={props} /></Content>
   </Wrapper>
 );

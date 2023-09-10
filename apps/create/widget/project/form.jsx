@@ -1,11 +1,7 @@
-/*__@import:QoL/widget__*/
-
 /*__@import:everything/utils/UUID__*/
 
 const { handleCreateProject, defaultProject, buttonChildren, buttonProps } =
   props;
-
-console.log("project.form", props);
 
 State.init({
   error: undefined,
@@ -37,53 +33,68 @@ const IB = "/*__@replace:nui__*//widget/Input.Button";
 return (
   <div className="p-4 bg-white rounded-4">
     <div className="d-flex flex-column gap-3">
-      <h5>New Project</h5>
-      {widget(IT, {
-        label: "Title",
-        placeholder: "My project",
-        inputProps: {
-          defaultValue: state.project.title,
-        },
-        onChange: (v) => updateP("title", v),
-      })}
-      {widget(IT, {
-        label: "Description",
-        placeholder: "Describe your project",
-        textarea: true,
-        inputProps: {
-          defaultValue: state.project.description,
-        },
-        onChange: (v) => updateP("description", v),
-      })}
-      {widget(IT, {
-        label: "Tags",
-        placeholder: "Separate with commas",
-        inputProps: {
-          defaultValue: state.project.tags.join(", "),
-        },
-        onChange: (v) =>
-          updateP(
-            "tags",
-            (v || "")
-              .split(",")
-              .filter((v) => v !== "")
-              .map((v) => v.trim()),
-          ),
-      })}
+      <h3>{buttonChildren || "Create Project"}</h3>
+      <Widget
+        src={IT}
+        props={{
+          label: "Title",
+          placeholder: "My project",
+          inputProps: {
+            defaultValue: state.project.title,
+          },
+          onChange: (v) => updateP("title", v),
+        }}
+      />
+      <Widget
+        src={IT}
+        props={{
+          label: "Description",
+          placeholder: "Describe your project",
+          textarea: true,
+          inputProps: {
+            defaultValue: state.project.description,
+          },
+          onChange: (v) => updateP("description", v),
+        }}
+      />
+      <Widget
+        src={IT}
+        props={{
+          label: "Tags",
+          placeholder: "Separate with commas",
+          inputProps: {
+            defaultValue: state.project.tags.join(", "),
+          },
+          onChange: (v) =>
+            updateP(
+              "tags",
+              (v || "")
+                .split(",")
+                .filter((v) => v !== "")
+                .map((v) => v.trim())
+            ),
+        }}
+      />
       <h6 className="mb-0">Logo</h6>
       {state.project.logo && (
         <img src={state.project.logo} alt="" height={100} width={100} />
       )}
-      {widget(SI, {
-        onChange: (v) => updateP("logo", v),
-        value: state.project.logo,
-      })}
+      <Widget
+        src={SI}
+        props={{
+          onChange: (v) => updateP("logo", v),
+          value: state.project.logo,
+        }}
+      />
       <div className="text-danger mt-2">{state.error}</div>
-      {widget(IB, {
-        children: buttonChildren ?? "Create Project",
-        variant: "success",
-        onClick: () => beforeHandleCreateProject(),
-      })}
+      <Widget
+        src={IB}
+        props={{
+          children: buttonChildren ?? "Create Project",
+          variant: "success",
+          onClick: () => beforeHandleCreateProject(),
+        }}
+      />
     </div>
   </div>
 );

@@ -1,7 +1,5 @@
 const { project } = props;
 
-/*__@import:QoL/widget__*/
-
 const objectDiff = (a, b) => {
   const aKeys = Object.keys(a);
   const bKeys = Object.keys(b);
@@ -31,12 +29,28 @@ const handleUpdateProject = (new_project) => {
   // if no diff, return
   if (Object.keys(diff).length === 0) return;
 
-  // TODO: Save project to SocialDB
-  console.log("handleUpdateProject", new_project);
+  const tags = {};
+  new_project.tags.forEach((tag) => {
+    tags[tag] = "";
+  });
+
+  props.handle["project"].update(project.id, {
+    data: {
+      title: new_project.title,
+      logo: new_project.logo,
+      tags: tags,
+      description: new_project.description,
+    },
+  });
 };
 
-return widget("/*__@appAccount__*//widget/project.form", {
-  handleCreateProject: handleUpdateProject,
-  defaultProject: project,
-  buttonChildren: "Update Project",
-});
+return (
+  <Widget
+    src="/*__@appAccount__*//widget/project.form"
+    props={{
+      handleCreateProject: handleUpdateProject,
+      defaultProject: project,
+      buttonChildren: "Update Project",
+    }}
+  />
+);
